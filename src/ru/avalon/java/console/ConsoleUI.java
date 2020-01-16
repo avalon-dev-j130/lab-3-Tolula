@@ -26,6 +26,7 @@ public class ConsoleUI<E extends Enum<E>> extends EnumReader<E> implements Runna
      *            набор команд, обрабатываемых интерфейсом
      */
     public ConsoleUI(Class<E> cls) {
+
         super(System.in, cls);
     }
 
