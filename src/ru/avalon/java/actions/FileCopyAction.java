@@ -21,23 +21,19 @@ public class FileCopyAction implements Action {
         /*
          * TODO №2 Реализуйте метод run класса FileCopyAction
          */
-        start();
-
-        Path source = Paths.get("d:\\Users\\lab-3-Tolula\\src\\test.txt");
-       // Path path = Paths.get("c:\\data\\myfile.txt");
-
-        Path target = Paths.get("d:\\Users\\lab-3-Tolula\\src\\dir");
+        Path source = Paths.get("lab-3-Tolula-Develop\\src\\copy\\copy.txt");
+        Path target = Paths.get("lab-3-Tolula-Develop\\src\\move");
         try {
+            System.out.println(Thread.currentThread().getName());
             Files.copy(source, target.resolve(source.getFileName()), REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (Thread.interrupted()) {
+                throw new InterruptedException();
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println("We've been interrupted");
         }
         //throw new UnsupportedOperationException("Not implemented yet!");
-
-
-
     }
-
     /**
      * {@inheritDoc}
      */
@@ -46,6 +42,7 @@ public class FileCopyAction implements Action {
         /*
          * TODO №3 Реализуйте метод close класса FileCopyAction
          */
-        throw new UnsupportedOperationException("Not implemented yet!");
+
+        //throw new UnsupportedOperationException("Not implemented yet!");
     }
 }
