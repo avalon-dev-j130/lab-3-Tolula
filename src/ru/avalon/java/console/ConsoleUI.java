@@ -26,6 +26,7 @@ public class ConsoleUI<E extends Enum<E>> extends EnumReader<E> implements Runna
      *            набор команд, обрабатываемых интерфейсом
      */
     public ConsoleUI(Class<E> cls) {
+
         super(System.in, cls);
     }
 
@@ -36,11 +37,11 @@ public class ConsoleUI<E extends Enum<E>> extends EnumReader<E> implements Runna
      * с текущим объектом, передаётся на обрабтку в метод
      * onCommand.
      */
-    protected void processCommand() {
+    protected void processCommand() throws Exception {
         try {
             System.out.print("> ");
             onCommand(next());
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.err.println(e.getMessage());
         }
     }
@@ -50,7 +51,13 @@ public class ConsoleUI<E extends Enum<E>> extends EnumReader<E> implements Runna
      */
     @Override
     public void run() {
-        while (!exit) processCommand();
+        while (!exit) {
+            try {
+                processCommand();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -64,7 +71,7 @@ public class ConsoleUI<E extends Enum<E>> extends EnumReader<E> implements Runna
      * 
      * @throws IOException в случае ощибки ввода вывода
      */
-    protected void onCommand(E command) throws IOException {}
+    protected void onCommand(E command) throws Exception {}
 
     /**
      * {@inheritDoc}
